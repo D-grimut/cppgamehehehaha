@@ -1,0 +1,14 @@
+.DS_Store
+app
+glad.c
+.vscode/settings.json
+.vscode/tasks.json
+app.dSYM/Contents/Info.plist
+app.dSYM/Contents/Resources/DWARF/app
+app.dSYM/Contents/Resources/Relocations/aarch64/app.yml
+dependencies/.DS_Store
+dependencies/include/glad/glad.h
+dependencies/include/GLFW/glfw3.h
+dependencies/include/GLFW/glfw3native.h
+dependencies/include/KHR/khrplatform.h
+dependencies/library/libglfw.3.4.dylib
