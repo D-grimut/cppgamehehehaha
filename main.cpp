@@ -11,16 +11,21 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 const char *vertexShaderSource = "#version 330 core\n"
-                                 "layout (location = 0) in vec3 aPos;\n"
+                                 "layout (location = 0) in vec3 aPos;\n"   // specify that first set of float numbers in vertices is position: location = 0
+                                 "layout (location = 1) in vec3 aColor;\n" // specify that second set of float numbers in vertices is color: location = 1
+                                 "out vec3 vertexColor;\n"                 // Pass to fragment shader
                                  "void main()\n"
                                  "{\n"
-                                 "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+                                 "   gl_Position = vec4(aPos, 1.0);\n"
+                                 "   vertexColor = aColor;\n" // Pass color attribute
                                  "}\0";
+
 const char *fragmentShaderSource = "#version 330 core\n"
+                                   "in vec3 vertexColor;\n" // Input from vertex shader
                                    "out vec4 FragColor;\n"
                                    "void main()\n"
                                    "{\n"
-                                   "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+                                   "   FragColor = vec4(vertexColor, 1.0);\n" // Use vertex color
                                    "}\n\0";
 
 int main()
@@ -103,9 +108,24 @@ int main()
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
     float vertices[] = {
-        -0.5f, -0.5f, 0.0f, // left
-        0.5f, -0.5f, 0.0f,  // right
-        0.0f, 0.5f, 0.0f    // top
+        // Positions        // Colors
+        // First Triangle (Orange)
+        0.5f, 0.5f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
+        -0.5f, -0.5f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
+        0.5f, -0.5f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
+
+        -0.5f, 0.5f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
+        0.5f, 0.5f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
+        -0.5f, -0.5f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
+
+        // Second Triangle (Blue)
+        0.25f, 0.25f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
+        -0.25f, -0.25f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
+        0.25f, -0.25f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
+
+        -0.25f, 0.25f, 0.0f, 0.0f, 0.0f, 1.0f, // Top vertex
+        0.25f, 0.25f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-left
+        -0.25f, -0.25f, 0.0f, 0.0f, 0.0f, 1.0f // Bottom-right
     };
 
     unsigned int VBO, VAO;
@@ -117,8 +137,11 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
+
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
 
     // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -146,7 +169,10 @@ int main()
         // draw our first triangle
         glUseProgram(shaderProgram);
         glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+
+        glDrawArrays(GL_TRIANGLES, 6, 6);
+
         // glBindVertexArray(0); // no need to unbind it every time
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
