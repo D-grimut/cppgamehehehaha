@@ -195,12 +195,13 @@ int main()
         // Bind the VAO so OpenGL knows to use it
         glBindVertexArray(VAO);
         // Draw the triangle using the GL_TRIANGLES primitive
-        int i = 0;
-        while (i < 60)
-        {
-            glDrawArrays(GL_TRIANGLES, i, 6);
-            i += 6;
-        }
+        // int i = 0;
+        // while (i < 60)
+        // {
+        //     glDrawArrays(GL_TRIANGLES, i, 6);
+        //     i += 6;
+        // }
+        glDrawArrays(GL_TRIANGLES, 0, 60);
         // Swap the back buffer with the front buffer
         glfwSwapBuffers(shitos);
         // Take care of all GLFW events
