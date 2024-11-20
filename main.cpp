@@ -73,22 +73,90 @@ int main()
     GLfloat vertices[] = {
         // Positions        // Colors
         // First Triangle (Orange)
-        0.5f, 0.5f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
-        -0.5f, -0.5f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
-        0.5f, -0.5f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
+        1.0f, 1.0f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
+        -1.0f, -1.0f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
+        1.0f, -1.0f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
 
-        -0.5f, 0.5f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
-        0.5f, 0.5f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
-        -0.5f, -0.5f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
+        -1.0f, 1.0f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
+        1.0f, 1.0f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
+        -1.0f, -1.0f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
 
         // Second Triangle (Blue)
-        0.25f, 0.25f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
-        -0.25f, -0.25f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
-        0.25f, -0.25f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
+        0.9f, 0.9f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
+        -0.9f, -0.9f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
+        0.9f, -0.9f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
 
-        -0.25f, 0.25f, 0.0f, 0.0f, 0.0f, 1.0f, // Top vertex
-        0.25f, 0.25f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-left
-        -0.25f, -0.25f, 0.0f, 0.0f, 0.0f, 1.0f // Bottom-right
+        -0.9f, 0.9f, 0.0f, 0.0f, 0.0f, 1.0f,  // Top vertex
+        0.9f, 0.9f, 0.0f, 0.0f, 0.0f, 1.0f,   // Bottom-left
+        -0.9f, -0.9f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-right
+        // Third triangle (Orange)
+        0.8f, 0.8f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
+        -0.8f, -0.8f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
+        0.8f, -0.8f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
+
+        -0.8f, 0.8f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
+        0.8f, 0.8f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
+        -0.8f, -0.8f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
+
+        // 4th Triangle (Blue)
+        0.7f, 0.7f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
+        -0.7f, -0.7f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
+        0.7f, -0.7f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
+
+        -0.7f, 0.7f, 0.0f, 0.0f, 0.0f, 1.0f,  // Top vertex
+        0.7f, 0.7f, 0.0f, 0.0f, 0.0f, 1.0f,   // Bottom-left
+        -0.7f, -0.7f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-right
+        // 5th Triangle(Orange)
+        0.6f, 0.6f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
+        -0.6f, -0.6f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
+        0.6f, -0.6f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
+
+        -0.6f, 0.6f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
+        0.6f, 0.6f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
+        -0.6f, -0.6f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
+
+        // 6th Triangle (Blue)
+        0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
+        0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
+
+        -0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f,  // Top vertex
+        0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f,   // Bottom-left
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-right
+        // 7th Triangle (Orange)
+        0.4f, 0.4f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
+        -0.4f, -0.4f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
+        0.4f, -0.4f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
+
+        -0.4f, 0.4f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
+        0.4f, 0.4f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
+        -0.4f, -0.4f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
+
+        // 8th Triangle (Blue)
+        0.3f, 0.3f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
+        -0.3f, -0.3f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
+        0.3f, -0.3f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
+
+        -0.3f, 0.3f, 0.0f, 0.0f, 0.0f, 1.0f,  // Top vertex
+        0.3f, 0.3f, 0.0f, 0.0f, 0.0f, 1.0f,   // Bottom-left
+        -0.3f, -0.3f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-right
+        // 9th Triangle (Orange)
+        0.2f, 0.2f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
+        -0.2f, -0.2f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
+        0.2f, -0.2f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
+
+        -0.2f, 0.2f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
+        0.2f, 0.2f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
+        -0.2f, -0.2f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
+
+        // 10th Triangle (Blue)
+        0.1f, 0.1f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
+        -0.1f, -0.1f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
+        0.1f, -0.1f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
+
+        -0.1f, 0.1f, 0.0f, 0.0f, 0.0f, 1.0f, // Top vertex
+        0.1f, 0.1f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-left
+        -0.1f, -0.1f, 0.0f, 0.0f, 0.0f, 1.0f // Bottom-right
     };
 
     GLuint VAO, VBO;
@@ -127,9 +195,12 @@ int main()
         // Bind the VAO so OpenGL knows to use it
         glBindVertexArray(VAO);
         // Draw the triangle using the GL_TRIANGLES primitive
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        // Draw second set of triangles for inner square
-        glDrawArrays(GL_TRIANGLES, 6, 6);
+        int i = 0;
+        while (i < 60)
+        {
+            glDrawArrays(GL_TRIANGLES, i, 6);
+            i += 6;
+        }
         // Swap the back buffer with the front buffer
         glfwSwapBuffers(shitos);
         // Take care of all GLFW events
