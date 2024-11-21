@@ -28,7 +28,7 @@ const char *fragmentShaderSource = "#version 330 core\n"
                                    "   FragColor = vec4(vertexColor, 1.0);\n" // Use vertex color
                                    "}\n\0";
 
-void randomizeSquareData(float *vertices, int squareCount)
+void neverSkipLegDay(float *vertices, int squareCount)
 {
 
     for (int i = 0; i < squareCount; i++)
@@ -297,7 +297,7 @@ int main()
     // Main while loop
     while (!glfwWindowShouldClose(shitos))
     {
-        randomizeSquareData(vertices, 10);
+        neverSkipLegDay(vertices, 10);
         // printVertices(vertices, 10);
         // Specify the color of the background
         glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
