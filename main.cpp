@@ -39,40 +39,41 @@ void neverSkipLegDay(float *vertices, int squareCount)
 
         int index = i * 6 * 6;
         GLfloat pos = (float)(0.1f * (squareCount - i));
+        GLfloat zpos = (float)(-0.1f * i);
 
         vertices[index + 0] = pos;
         vertices[index + 1] = pos;
-        vertices[index + 2] = 0.0f;
+        vertices[index + 2] = zpos;
         vertices[index + 3] = r;
         vertices[index + 4] = g;
         vertices[index + 5] = b;
         vertices[index + 6] = -pos;
         vertices[index + 7] = -pos;
-        vertices[index + 8] = 0.0f;
+        vertices[index + 8] = zpos;
         vertices[index + 9] = r;
         vertices[index + 10] = g;
         vertices[index + 11] = b;
         vertices[index + 12] = pos;
         vertices[index + 13] = -pos;
-        vertices[index + 14] = 0.0f;
+        vertices[index + 14] = zpos;
         vertices[index + 15] = r;
         vertices[index + 16] = g;
         vertices[index + 17] = b;
         vertices[index + 18] = -pos;
         vertices[index + 19] = pos;
-        vertices[index + 20] = 0.0f;
+        vertices[index + 20] = zpos;
         vertices[index + 21] = r;
         vertices[index + 22] = g;
         vertices[index + 23] = b;
         vertices[index + 24] = pos;
         vertices[index + 25] = pos;
-        vertices[index + 26] = 0.0f;
+        vertices[index + 26] = zpos;
         vertices[index + 27] = r;
         vertices[index + 28] = g;
         vertices[index + 29] = b;
         vertices[index + 30] = -pos;
         vertices[index + 31] = -pos;
-        vertices[index + 32] = 0.0f;
+        vertices[index + 32] = zpos;
         vertices[index + 33] = r;
         vertices[index + 34] = g;
         vertices[index + 35] = b;
@@ -182,94 +183,94 @@ int main()
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
-    GLfloat vertices[] = {
-        // Positions        // Colors
-        // First Triangle (Orange)
-        1.0f, 1.0f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
-        -1.0f, -1.0f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
-        1.0f, -1.0f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
+    GLfloat vertices[10 * 6 * 6]; //= {
+    //     // Positions        // Colors
+    //     // First Triangle (Orange)
+    //     1.0f, 1.0f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
+    //     -1.0f, -1.0f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
+    //     1.0f, -1.0f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
 
-        -1.0f, 1.0f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
-        1.0f, 1.0f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
-        -1.0f, -1.0f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
+    //     -1.0f, 1.0f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
+    //     1.0f, 1.0f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
+    //     -1.0f, -1.0f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
 
-        // Second Triangle (Blue)
-        0.9f, 0.9f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
-        -0.9f, -0.9f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
-        0.9f, -0.9f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
+    //     // Second Triangle (Blue)
+    //     0.9f, 0.9f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
+    //     -0.9f, -0.9f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
+    //     0.9f, -0.9f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
 
-        -0.9f, 0.9f, 0.0f, 0.0f, 0.0f, 1.0f,  // Top vertex
-        0.9f, 0.9f, 0.0f, 0.0f, 0.0f, 1.0f,   // Bottom-left
-        -0.9f, -0.9f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-right
-        // Third triangle (Orange)
-        0.8f, 0.8f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
-        -0.8f, -0.8f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
-        0.8f, -0.8f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
+    //     -0.9f, 0.9f, 0.0f, 0.0f, 0.0f, 1.0f,  // Top vertex
+    //     0.9f, 0.9f, 0.0f, 0.0f, 0.0f, 1.0f,   // Bottom-left
+    //     -0.9f, -0.9f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-right
+    //     // Third triangle (Orange)
+    //     0.8f, 0.8f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
+    //     -0.8f, -0.8f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
+    //     0.8f, -0.8f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
 
-        -0.8f, 0.8f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
-        0.8f, 0.8f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
-        -0.8f, -0.8f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
+    //     -0.8f, 0.8f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
+    //     0.8f, 0.8f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
+    //     -0.8f, -0.8f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
 
-        // 4th Triangle (Blue)
-        0.7f, 0.7f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
-        -0.7f, -0.7f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
-        0.7f, -0.7f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
+    //     // 4th Triangle (Blue)
+    //     0.7f, 0.7f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
+    //     -0.7f, -0.7f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
+    //     0.7f, -0.7f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
 
-        -0.7f, 0.7f, 0.0f, 0.0f, 0.0f, 1.0f,  // Top vertex
-        0.7f, 0.7f, 0.0f, 0.0f, 0.0f, 1.0f,   // Bottom-left
-        -0.7f, -0.7f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-right
-        // 5th Triangle(Orange)
-        0.6f, 0.6f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
-        -0.6f, -0.6f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
-        0.6f, -0.6f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
+    //     -0.7f, 0.7f, 0.0f, 0.0f, 0.0f, 1.0f,  // Top vertex
+    //     0.7f, 0.7f, 0.0f, 0.0f, 0.0f, 1.0f,   // Bottom-left
+    //     -0.7f, -0.7f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-right
+    //     // 5th Triangle(Orange)
+    //     0.6f, 0.6f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
+    //     -0.6f, -0.6f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
+    //     0.6f, -0.6f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
 
-        -0.6f, 0.6f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
-        0.6f, 0.6f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
-        -0.6f, -0.6f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
+    //     -0.6f, 0.6f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
+    //     0.6f, 0.6f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
+    //     -0.6f, -0.6f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
 
-        // 6th Triangle (Blue)
-        0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
-        0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
+    //     // 6th Triangle (Blue)
+    //     0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
+    //     -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
+    //     0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
 
-        -0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f,  // Top vertex
-        0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f,   // Bottom-left
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-right
-        // 7th Triangle (Orange)
-        0.4f, 0.4f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
-        -0.4f, -0.4f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
-        0.4f, -0.4f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
+    //     -0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f,  // Top vertex
+    //     0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f,   // Bottom-left
+    //     -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-right
+    //     // 7th Triangle (Orange)
+    //     0.4f, 0.4f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
+    //     -0.4f, -0.4f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
+    //     0.4f, -0.4f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
 
-        -0.4f, 0.4f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
-        0.4f, 0.4f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
-        -0.4f, -0.4f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
+    //     -0.4f, 0.4f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
+    //     0.4f, 0.4f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
+    //     -0.4f, -0.4f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
 
-        // 8th Triangle (Blue)
-        0.3f, 0.3f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
-        -0.3f, -0.3f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
-        0.3f, -0.3f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
+    //     // 8th Triangle (Blue)
+    //     0.3f, 0.3f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
+    //     -0.3f, -0.3f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
+    //     0.3f, -0.3f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
 
-        -0.3f, 0.3f, 0.0f, 0.0f, 0.0f, 1.0f,  // Top vertex
-        0.3f, 0.3f, 0.0f, 0.0f, 0.0f, 1.0f,   // Bottom-left
-        -0.3f, -0.3f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-right
-        // 9th Triangle (Orange)
-        0.2f, 0.2f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
-        -0.2f, -0.2f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
-        0.2f, -0.2f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
+    //     -0.3f, 0.3f, 0.0f, 0.0f, 0.0f, 1.0f,  // Top vertex
+    //     0.3f, 0.3f, 0.0f, 0.0f, 0.0f, 1.0f,   // Bottom-left
+    //     -0.3f, -0.3f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-right
+    //     // 9th Triangle (Orange)
+    //     0.2f, 0.2f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
+    //     -0.2f, -0.2f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
+    //     0.2f, -0.2f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
 
-        -0.2f, 0.2f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
-        0.2f, 0.2f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
-        -0.2f, -0.2f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
+    //     -0.2f, 0.2f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
+    //     0.2f, 0.2f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
+    //     -0.2f, -0.2f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
 
-        // 10th Triangle (Blue)
-        0.1f, 0.1f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
-        -0.1f, -0.1f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
-        0.1f, -0.1f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
+    //     // 10th Triangle (Blue)
+    //     0.1f, 0.1f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
+    //     -0.1f, -0.1f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
+    //     0.1f, -0.1f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
 
-        -0.1f, 0.1f, 0.0f, 0.0f, 0.0f, 1.0f, // Top vertex
-        0.1f, 0.1f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-left
-        -0.1f, -0.1f, 0.0f, 0.0f, 0.0f, 1.0f // Bottom-right
-    };
+    //     -0.1f, 0.1f, 0.0f, 0.0f, 0.0f, 1.0f, // Top vertex
+    //     0.1f, 0.1f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-left
+    //     -0.1f, -0.1f, 0.0f, 0.0f, 0.0f, 1.0f // Bottom-right
+    // };
 
     // randomizeSquareData(vertices, 1);
 
@@ -298,7 +299,7 @@ int main()
     while (!glfwWindowShouldClose(shitos))
     {
         neverSkipLegDay(vertices, 10);
-        // printVertices(vertices, 10);
+        printVertices(vertices, 10);
         // Specify the color of the background
         glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
         // Clean the back buffer and assign the new color to it
@@ -309,7 +310,7 @@ int main()
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glDrawArrays(GL_TRIANGLES, 0, 60);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
         glBindVertexArray(0);
