@@ -41,36 +41,49 @@ void neverSkipLegDay(float *vertices, int squareCount)
         GLfloat pos = (float)(0.1f * (squareCount - i));
         GLfloat zpos = (float)(-0.1f * i);
 
+        // Triangle 1
+        // coord 1
         vertices[index + 0] = pos;
         vertices[index + 1] = pos;
         vertices[index + 2] = zpos;
         vertices[index + 3] = r;
         vertices[index + 4] = g;
         vertices[index + 5] = b;
+        
+        // coord 2
         vertices[index + 6] = -pos;
         vertices[index + 7] = -pos;
         vertices[index + 8] = zpos;
         vertices[index + 9] = r;
         vertices[index + 10] = g;
         vertices[index + 11] = b;
+
+        // coord 2
         vertices[index + 12] = pos;
         vertices[index + 13] = -pos;
         vertices[index + 14] = zpos;
         vertices[index + 15] = r;
         vertices[index + 16] = g;
         vertices[index + 17] = b;
+
+        // Triangle 2
+        // coord 1
         vertices[index + 18] = -pos;
         vertices[index + 19] = pos;
         vertices[index + 20] = zpos;
         vertices[index + 21] = r;
         vertices[index + 22] = g;
         vertices[index + 23] = b;
+
+        // coord 2
         vertices[index + 24] = pos;
         vertices[index + 25] = pos;
         vertices[index + 26] = zpos;
         vertices[index + 27] = r;
         vertices[index + 28] = g;
         vertices[index + 29] = b;
+
+        // coord 3
         vertices[index + 30] = -pos;
         vertices[index + 31] = -pos;
         vertices[index + 32] = zpos;
@@ -158,9 +171,11 @@ int main()
     glBindVertexArray(VAO);
 
     // Make the VAO the current Vertex Array Object by binding it
+    // Vertex attrib 0 (position)
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
 
+    // vertex attrib 1 (color)
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
@@ -180,8 +195,12 @@ int main()
         glUseProgram(shaderProgram);
         // Bind the VAO so OpenGL knows to use it
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+        // updating existing buffer without having to relocate it.
         glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
         glBindVertexArray(VAO);
+
+        // 6 * 10 = 60 vertices
         glDrawArrays(GL_TRIANGLES, 0, 60);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
