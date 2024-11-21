@@ -1,5 +1,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <cstdlib>
+#include <iostream>
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -26,6 +28,115 @@ const char *fragmentShaderSource = "#version 330 core\n"
                                    "   FragColor = vec4(vertexColor, 1.0);\n" // Use vertex color
                                    "}\n\0";
 
+void randomizeSquareData(float *vertices, int squareCount)
+{
+
+    for (int i = 0; i < squareCount; i++)
+    {
+        GLfloat r = ((float)rand() / RAND_MAX);
+        GLfloat g = ((float)rand() / RAND_MAX);
+        GLfloat b = ((float)rand() / RAND_MAX);
+
+        int index = i * 6 * 6;
+        GLfloat pos = (float)(0.1f * (squareCount - i));
+
+        vertices[index + 0] = pos;
+        vertices[index + 1] = pos;
+        vertices[index + 2] = 0.0f;
+        vertices[index + 3] = r;
+        vertices[index + 4] = g;
+        vertices[index + 5] = b;
+        vertices[index + 6] = -pos;
+        vertices[index + 7] = -pos;
+        vertices[index + 8] = 0.0f;
+        vertices[index + 9] = r;
+        vertices[index + 10] = g;
+        vertices[index + 11] = b;
+        vertices[index + 12] = pos;
+        vertices[index + 13] = -pos;
+        vertices[index + 14] = 0.0f;
+        vertices[index + 15] = r;
+        vertices[index + 16] = g;
+        vertices[index + 17] = b;
+        vertices[index + 18] = -pos;
+        vertices[index + 19] = pos;
+        vertices[index + 20] = 0.0f;
+        vertices[index + 21] = r;
+        vertices[index + 22] = g;
+        vertices[index + 23] = b;
+        vertices[index + 24] = pos;
+        vertices[index + 25] = pos;
+        vertices[index + 26] = 0.0f;
+        vertices[index + 27] = r;
+        vertices[index + 28] = g;
+        vertices[index + 29] = b;
+        vertices[index + 30] = -pos;
+        vertices[index + 31] = -pos;
+        vertices[index + 32] = 0.0f;
+        vertices[index + 33] = r;
+        vertices[index + 34] = g;
+        vertices[index + 35] = b;
+
+        // float verticesScheme[] = {
+        //     pos,
+        //     pos,
+        //     0.0f,
+        //     r,
+        //     g,
+        //     b,
+        //     -pos,
+        //     -pos,
+        //     0.0f,
+        //     r,
+        //     g,
+        //     b,
+        //     pos,
+        //     -pos,
+        //     0.0f,
+        //     r,
+        //     g,
+        //     b,
+        //     -pos,
+        //     pos,
+        //     0.0f,
+        //     r,
+        //     g,
+        //     b,
+        //     pos,
+        //     pos,
+        //     0.0f,
+        //     r,
+        //     g,
+        //     b,
+        //     -pos,
+        //     -pos,
+        //     0.0f,
+        //     r,
+        //     g,
+        //     b};
+    }
+}
+void printVertices(float *vertices, int squareCount)
+{
+    int j = 0;
+    for (int i = 0; i < squareCount * 6 * 6; i++)
+    {
+
+        if (i % 6 == 0)
+        {
+            std::cout << vertices[i] << " ";
+            std::cout << vertices[i + 1] << " ";
+            std::cout << vertices[i + 2] << " ";
+            std::cout << vertices[i + 3] << " ";
+            std::cout << vertices[i + 4] << " ";
+            std::cout << vertices[i + 5] << " ";
+            std::cout << i
+                      << std::endl;
+        }
+    }
+    std::cout << std::endl;
+}
+
 int main()
 {
     GLFWwindow *shitos;
@@ -49,6 +160,7 @@ int main()
     /* Make the window's context current */
     glfwMakeContextCurrent(shitos);
     gladLoadGL();
+
     glViewport(0, 0, 700, 700);
 
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -159,6 +271,8 @@ int main()
         -0.1f, -0.1f, 0.0f, 0.0f, 0.0f, 1.0f // Bottom-right
     };
 
+    // randomizeSquareData(vertices, 1);
+
     GLuint VAO, VBO;
 
     // Generate the VAO and VBO with only 1 object each
@@ -166,10 +280,10 @@ int main()
     glGenBuffers(1, &VBO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    // Make the VAO the current Vertex Array Object by binding it
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
     glBindVertexArray(VAO);
 
+    // Make the VAO the current Vertex Array Object by binding it
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
 
@@ -178,14 +292,13 @@ int main()
 
     // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    // Bind both the VBO and VAO to 0 so that we don't accidentally modify the VAO and VBO we created
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
     // Main while loop
     while (!glfwWindowShouldClose(shitos))
     {
+        randomizeSquareData(vertices, 10);
+        // printVertices(vertices, 10);
         // Specify the color of the background
         glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
         // Clean the back buffer and assign the new color to it
@@ -193,15 +306,13 @@ int main()
         // Tell OpenGL which Shader Program we want to use
         glUseProgram(shaderProgram);
         // Bind the VAO so OpenGL knows to use it
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
         glBindVertexArray(VAO);
-        // Draw the triangle using the GL_TRIANGLES primitive
-        // int i = 0;
-        // while (i < 60)
-        // {
-        //     glDrawArrays(GL_TRIANGLES, i, 6);
-        //     i += 6;
-        // }
-        glDrawArrays(GL_TRIANGLES, 0, 60);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+        glBindVertexArray(0);
         // Swap the back buffer with the front buffer
         glfwSwapBuffers(shitos);
         // Take care of all GLFW events
