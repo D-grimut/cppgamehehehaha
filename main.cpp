@@ -7,8 +7,8 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 1400;
+const unsigned int SCR_HEIGHT = 1200;
 
 const char *vertexShaderSource = "#version 330 core\n"
                                  "layout (location = 0) in vec3 aPos;\n"   // specify that first set of float numbers in vertices is position: location = 0
@@ -77,44 +77,6 @@ void neverSkipLegDay(float *vertices, int squareCount)
         vertices[index + 33] = r;
         vertices[index + 34] = g;
         vertices[index + 35] = b;
-
-        // float verticesScheme[] = {
-        //     pos,
-        //     pos,
-        //     0.0f,
-        //     r,
-        //     g,
-        //     b,
-        //     -pos,
-        //     -pos,
-        //     0.0f,
-        //     r,
-        //     g,
-        //     b,
-        //     pos,
-        //     -pos,
-        //     0.0f,
-        //     r,
-        //     g,
-        //     b,
-        //     -pos,
-        //     pos,
-        //     0.0f,
-        //     r,
-        //     g,
-        //     b,
-        //     pos,
-        //     pos,
-        //     0.0f,
-        //     r,
-        //     g,
-        //     b,
-        //     -pos,
-        //     -pos,
-        //     0.0f,
-        //     r,
-        //     g,
-        //     b};
     }
 }
 void printVertices(float *vertices, int squareCount)
@@ -151,7 +113,7 @@ int main()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     /* Create a windowed mode window and its OpenGL context */
-    shitos = glfwCreateWindow(700, 700, "init", NULL, NULL);
+    shitos = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "init", NULL, NULL);
     if (!shitos)
     {
         glfwTerminate();
@@ -162,7 +124,7 @@ int main()
     glfwMakeContextCurrent(shitos);
     gladLoadGL();
 
-    glViewport(0, 0, 700, 700);
+    glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
 
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
@@ -183,96 +145,7 @@ int main()
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
-    GLfloat vertices[10 * 6 * 6]; //= {
-    //     // Positions        // Colors
-    //     // First Triangle (Orange)
-    //     1.0f, 1.0f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
-    //     -1.0f, -1.0f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
-    //     1.0f, -1.0f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
-
-    //     -1.0f, 1.0f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
-    //     1.0f, 1.0f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
-    //     -1.0f, -1.0f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
-
-    //     // Second Triangle (Blue)
-    //     0.9f, 0.9f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
-    //     -0.9f, -0.9f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
-    //     0.9f, -0.9f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
-
-    //     -0.9f, 0.9f, 0.0f, 0.0f, 0.0f, 1.0f,  // Top vertex
-    //     0.9f, 0.9f, 0.0f, 0.0f, 0.0f, 1.0f,   // Bottom-left
-    //     -0.9f, -0.9f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-right
-    //     // Third triangle (Orange)
-    //     0.8f, 0.8f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
-    //     -0.8f, -0.8f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
-    //     0.8f, -0.8f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
-
-    //     -0.8f, 0.8f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
-    //     0.8f, 0.8f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
-    //     -0.8f, -0.8f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
-
-    //     // 4th Triangle (Blue)
-    //     0.7f, 0.7f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
-    //     -0.7f, -0.7f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
-    //     0.7f, -0.7f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
-
-    //     -0.7f, 0.7f, 0.0f, 0.0f, 0.0f, 1.0f,  // Top vertex
-    //     0.7f, 0.7f, 0.0f, 0.0f, 0.0f, 1.0f,   // Bottom-left
-    //     -0.7f, -0.7f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-right
-    //     // 5th Triangle(Orange)
-    //     0.6f, 0.6f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
-    //     -0.6f, -0.6f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
-    //     0.6f, -0.6f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
-
-    //     -0.6f, 0.6f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
-    //     0.6f, 0.6f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
-    //     -0.6f, -0.6f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
-
-    //     // 6th Triangle (Blue)
-    //     0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
-    //     -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
-    //     0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
-
-    //     -0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f,  // Top vertex
-    //     0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f,   // Bottom-left
-    //     -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-right
-    //     // 7th Triangle (Orange)
-    //     0.4f, 0.4f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
-    //     -0.4f, -0.4f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
-    //     0.4f, -0.4f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
-
-    //     -0.4f, 0.4f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
-    //     0.4f, 0.4f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
-    //     -0.4f, -0.4f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
-
-    //     // 8th Triangle (Blue)
-    //     0.3f, 0.3f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
-    //     -0.3f, -0.3f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
-    //     0.3f, -0.3f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
-
-    //     -0.3f, 0.3f, 0.0f, 0.0f, 0.0f, 1.0f,  // Top vertex
-    //     0.3f, 0.3f, 0.0f, 0.0f, 0.0f, 1.0f,   // Bottom-left
-    //     -0.3f, -0.3f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-right
-    //     // 9th Triangle (Orange)
-    //     0.2f, 0.2f, 0.0f, 1.0f, 0.5f, 0.2f,   // Top vertex
-    //     -0.2f, -0.2f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-left
-    //     0.2f, -0.2f, 0.0f, 1.0f, 0.5f, 0.2f,  // Bottom-right
-
-    //     -0.2f, 0.2f, 0.0f, 1.0f, 0.5f, 0.2f,  // Top vertex
-    //     0.2f, 0.2f, 0.0f, 1.0f, 0.5f, 0.2f,   // Bottom-left
-    //     -0.2f, -0.2f, 0.0f, 1.0f, 0.5f, 0.2f, // Bottom-right
-
-    //     // 10th Triangle (Blue)
-    //     0.1f, 0.1f, 0.0f, 0.0f, 0.0f, 1.0f,   // Top vertex
-    //     -0.1f, -0.1f, 0.0f, 0.0f, 0.0f, 1.0f, // Bottom-left
-    //     0.1f, -0.1f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-right
-
-    //     -0.1f, 0.1f, 0.0f, 0.0f, 0.0f, 1.0f, // Top vertex
-    //     0.1f, 0.1f, 0.0f, 0.0f, 0.0f, 1.0f,  // Bottom-left
-    //     -0.1f, -0.1f, 0.0f, 0.0f, 0.0f, 1.0f // Bottom-right
-    // };
-
-    // randomizeSquareData(vertices, 1);
+    GLfloat vertices[10 * 6 * 6];
 
     GLuint VAO, VBO;
 
@@ -299,7 +172,6 @@ int main()
     while (!glfwWindowShouldClose(shitos))
     {
         neverSkipLegDay(vertices, 10);
-        printVertices(vertices, 10);
         // Specify the color of the background
         glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
         // Clean the back buffer and assign the new color to it
