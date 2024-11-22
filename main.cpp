@@ -10,6 +10,19 @@ void processInput(GLFWwindow *window);
 const unsigned int SCR_WIDTH = 1400;
 const unsigned int SCR_HEIGHT = 1200;
 
+const char *vertexRotationShader = R"END(
+#version 120
+uniform mat3 matrix;
+attribute vec3 inPosition;
+attribute vec3 inColor;
+varying vec4 outColor;
+void main()
+{
+    outColor = inColor;
+    gl_Position = inPosition * matrix;
+}
+)END";
+
 const char *vertexShaderSource = "#version 330 core\n"
                                  "layout (location = 0) in vec3 aPos;\n"   // specify that first set of float numbers in vertices is position: location = 0
                                  "layout (location = 1) in vec3 aColor;\n" // specify that second set of float numbers in vertices is color: location = 1
@@ -106,8 +119,7 @@ void printVertices(float *vertices, int squareCount)
             std::cout << vertices[i + 3] << " ";
             std::cout << vertices[i + 4] << " ";
             std::cout << vertices[i + 5] << " ";
-            std::cout << i
-                      << std::endl;
+            std::cout << i << std::endl;
         }
     }
     std::cout << std::endl;
@@ -139,8 +151,13 @@ int main()
 
     glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
 
+    // GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    // glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+    // glCompileShader(vertexShader);
+
+    //Rotation Shader
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+    glShaderSource(vertexShader, 1, &vertexRotationShader, NULL);
     glCompileShader(vertexShader);
 
     GLuint didySpecialShader = glCreateShader(GL_FRAGMENT_SHADER);
@@ -170,18 +187,14 @@ int main()
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
     glBindVertexArray(VAO);
 
-    // Make the VAO the current Vertex Array Object by binding it
-    // Vertex attrib 0 (position)
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
-    glEnableVertexAttribArray(0);
-
-    // vertex attrib 1 (color)
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
+    // TODO: use variables (glGetAttribLocation) for position, and populate them like that.
 
     // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+
+    // Initial alpha offset for the angle
+    float alpha = 0;
 
     // Main while loop
     while (!glfwWindowShouldClose(shitos))
@@ -191,6 +204,18 @@ int main()
         glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
         // Clean the back buffer and assign the new color to it
         glClear(GL_COLOR_BUFFER_BIT);
+
+        float sa = 0.5 * sin(alpha);
+        float ca = 0.5 * cos(alpha);
+        alpha += 0.1;
+
+        const GLfloat matrix[] = {
+            sa, -ca, 0,0,
+            ca, sa,0,0,
+            0,0,1,0,
+            0,0,0,1
+        };
+
         // Tell OpenGL which Shader Program we want to use
         glUseProgram(shaderProgram);
         // Bind the VAO so OpenGL knows to use it
@@ -199,6 +224,7 @@ int main()
         // updating existing buffer without having to relocate it.
         glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
         glBindVertexArray(VAO);
+        
 
         // 6 * 10 = 60 vertices
         glDrawArrays(GL_TRIANGLES, 0, 60);
