@@ -10,18 +10,21 @@ void processInput(GLFWwindow *window);
 const unsigned int SCR_WIDTH = 1400;
 const unsigned int SCR_HEIGHT = 1200;
 
-const char *vertexRotationShader = R"END(
-#version 120
-uniform mat3 matrix;
-attribute vec3 inPosition;
-attribute vec3 inColor;
-varying vec4 outColor;
-void main()
-{
-    outColor = inColor;
-    gl_Position = inPosition * matrix;
-}
-)END";
+
+// Important for the name for the output colors to match in both vertex and fragment shaders
+// this is a pipeline - so when vertex is done, we need to feed that to the fragmnet shader
+// code is somehow shared in the backend, so variable names, especcialy for outputs, needs to be the same!
+const char *vertexRotationShader = 
+"#version 330 core\n"
+"layout (location = 0) in vec3 aPos;\n"
+"layout (location = 1) in vec3 aColor;\n"
+"uniform mat4 matrix;\n"
+"out vec3 vertexColor;\n"
+"void main()\n"
+"{\n"
+"   gl_Position = matrix * vec4(aPos, 1.0);\n"
+"   vertexColor = aColor;\n"
+"}\0";
 
 const char *vertexShaderSource = "#version 330 core\n"
                                  "layout (location = 0) in vec3 aPos;\n"   // specify that first set of float numbers in vertices is position: location = 0
@@ -46,6 +49,9 @@ void neverSkipLegDay(float *vertices, int squareCount)
 
     for (int i = 0; i < squareCount; i++)
     {
+        // GLfloat r = 0.1;
+        // GLfloat g = 0.6;
+        // GLfloat b = 0.4;
         GLfloat r = ((float)rand() / RAND_MAX);
         GLfloat g = ((float)rand() / RAND_MAX);
         GLfloat b = ((float)rand() / RAND_MAX);
@@ -104,25 +110,6 @@ void neverSkipLegDay(float *vertices, int squareCount)
         vertices[index + 34] = g;
         vertices[index + 35] = b;
     }
-}
-void printVertices(float *vertices, int squareCount)
-{
-    int j = 0;
-    for (int i = 0; i < squareCount * 6 * 6; i++)
-    {
-
-        if (i % 6 == 0)
-        {
-            std::cout << vertices[i] << " ";
-            std::cout << vertices[i + 1] << " ";
-            std::cout << vertices[i + 2] << " ";
-            std::cout << vertices[i + 3] << " ";
-            std::cout << vertices[i + 4] << " ";
-            std::cout << vertices[i + 5] << " ";
-            std::cout << i << std::endl;
-        }
-    }
-    std::cout << std::endl;
 }
 
 int main()
@@ -189,6 +176,42 @@ int main()
 
     // TODO: use variables (glGetAttribLocation) for position, and populate them like that.
 
+    // Make the VAO the current Vertex Array Object by binding it
+    // Vertex attrib 0 (position)
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
+    glEnableVertexAttribArray(0);
+
+    // vertex attrib 1 (color)
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
+    GLint success;
+    GLchar infoLog[512];
+
+    // Check vertex shader
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+        std::cerr << "ERROR: Vertex shader compilation failed\n" << infoLog << std::endl;
+    }
+
+    // Check fragment shader
+    glGetShaderiv(didySpecialShader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        glGetShaderInfoLog(didySpecialShader, 512, NULL, infoLog);
+        std::cerr << "ERROR: Fragment shader compilation failed\n" << infoLog << std::endl;
+    }
+
+    // Check program linking
+    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+    if (!success) {
+        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+        std::cerr << "ERROR: Shader program linking failed\n" << infoLog << std::endl;
+    }
+
+    // This is another way to retrieve shader variables
+    GLint matrixId = glGetUniformLocation(shaderProgram, "matrix");
+
     // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
@@ -207,7 +230,7 @@ int main()
 
         float sa = 0.5 * sin(alpha);
         float ca = 0.5 * cos(alpha);
-        alpha += 0.1;
+        alpha += 0.01;
 
         const GLfloat matrix[] = {
             sa, -ca, 0,0,
@@ -215,6 +238,8 @@ int main()
             0,0,1,0,
             0,0,0,1
         };
+
+        glUniformMatrix4fv(matrixId, 1, GL_TRUE, matrix);
 
         // Tell OpenGL which Shader Program we want to use
         glUseProgram(shaderProgram);
@@ -225,7 +250,6 @@ int main()
         glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
         glBindVertexArray(VAO);
         
-
         // 6 * 10 = 60 vertices
         glDrawArrays(GL_TRIANGLES, 0, 60);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
